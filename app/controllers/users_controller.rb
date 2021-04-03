@@ -11,6 +11,8 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
+    @follow = current_user.active_relationships.build(follower_id: params[:user_id])
+    @follow.save
   end
   
   def edit
@@ -27,6 +29,16 @@ class UsersController < ApplicationController
       flash[:notice] = @user.errors.full_messages
       render :edit
     end
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+  end
+  
+  def followeds
+    @user = User.find(params[:id])
+    @users = @user.followeds
   end
 
   private
