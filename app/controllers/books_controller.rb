@@ -3,6 +3,7 @@ class BooksController < ApplicationController
 
 
   def show
+<<<<<<< HEAD
      @book = Book.find(params[:id])
      @new_book = Book.new
      @favorite_count =  Favorite.where(book_id: params[:book_id], user_id: current_user.id).count
@@ -14,13 +15,15 @@ class BooksController < ApplicationController
      @book_comment_count = @book.book_comments.count
      @user = @book.user
 >>>>>>> d257a19ad988372e00287868aea23a6cef081a3c
+=======
+   @book = Book.find(params[:id])
+   @new_book = Book.new
+>>>>>>> 615d3845988e9fc6489452fc9f6c8a540d51dd97
   end
 
   def index
     @book = Book.new
     @books = Book.all
-    @favorite_count =  Favorite.where(book_id: params[:book_id], user_id: current_user.id).count
-    @book_comment_count = @book.book_comments.count
   end
 
   def create
@@ -34,12 +37,6 @@ class BooksController < ApplicationController
       render 'index'
     end
   end
-
-  def edit
-    @book = Book.find(params[:id])
-  end
-
-
 
   def update
     @book = Book.find(params[:id])
@@ -57,13 +54,12 @@ class BooksController < ApplicationController
   end
 
   private
-
   def user_params
     params.require(:user).permit(:name, :introduction)
   end
   
   def book_params
-       params.require(:book).permit(:title, :body)    
+    params.require(:book).permit(:title, :body)    
   end
   
   def ensure_correct_user

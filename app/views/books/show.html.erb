@@ -3,7 +3,7 @@
     <div class='col-md-3'>
       
       <h2>User info</h2>
-      <%= render partial: 'info', locals: { user: @user } %>
+      <%= render partial: 'info', locals: { user: @book.user } %>
       <h2 class="mt-3">New book</h2>
       <%= render partial: 'form', locals: { book: @new_book } %>
     </div>
@@ -18,24 +18,21 @@
           </td>
           <td><%= link_to @book.title, book_path(@book) %></td>
           <td><%= @book.body %></td>
-          <% if @book.favorited_by?(current_user) %>
-          <td><%= link_to book_favorites_path(@book.id) , method: :delete do %>
-                ♥<%= @book.favorites.count %>
-              <% end %>
+          
+          <td class="favorite_btn_<%= @book.id %>" >
+            <%= render "favorites/favorite" , book: @book %>
           </td>
-          <% else %>
-          <td><%= link_to book_favorites_path(@book.id) , method: :post do %>
-                ♥<%= @book.favorites.count %>
-              <% end %>
+          <td id="comments_count">
+            <span>コメント数:</span><%= @book.book_comments.count %>
           </td>
-          <% end %>
-          <td><span>コメント数:</span><%= @book_comment_count %></td>
+          
           <% if @book.user_id == current_user.id %>
           <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
           <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
           <% end %>
         </tr>
       </table>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <%= render partial: "book_comments/form" , local: { book_comment: @book_comment } %>
       
@@ -65,6 +62,16 @@
       </div>
       <% end %>
 >>>>>>> d257a19ad988372e00287868aea23a6cef081a3c
+=======
+      
+     <div id="book_comments">
+       <%= render "book_comments/index", book: @book, book_comments: @book.book_comments %>
+     </div>
+     
+      <div id="book_comment_form">
+      <%= render "book_comments/form", book: @book, book_comment: BookComment.new %>
+     </div>
+>>>>>>> 615d3845988e9fc6489452fc9f6c8a540d51dd97
     </div>
   </div>
 </div>
